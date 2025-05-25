@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:15
+    container_name: contract_db
+    env_file: .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+
+  web:
+    build: ./backend
+    container_name: contract_backend
+    command: gunicorn contract_mrg.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+volumes:
+  pgdata:

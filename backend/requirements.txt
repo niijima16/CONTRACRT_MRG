@@ -1,0 +1,12 @@
+# Django本体
+Django>=4.2,<5.0
+djangorestframework>=3.14
+
+# PostgreSQL接続
+psycopg2-binary>=2.9
+
+# 本番WSGIサーバー
+gunicorn>=21.2
+
+# PDF生成ライブラリ
+WeasyPrint>=61.0
