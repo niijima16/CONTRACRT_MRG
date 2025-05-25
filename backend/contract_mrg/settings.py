@@ -42,13 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 各apps
-    'contracts',
-    'invoices',
-    'sales',
-    'clients',
-    'bulkmail',
-    'notifications',
-    'pdfgen',
+    'apps.contracts',
+    'apps.invoices',
+    'apps.sales',
+    'apps.clients',
+    'apps.bulkmail',
+    'apps.notifications',
+    'apps.pdfgen',
 ]
 
 MIDDLEWARE = [
