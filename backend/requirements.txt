@@ -1,6 +1,8 @@
 # Django本体
 Django>=4.2,<5.0
+django-cors-headers
 djangorestframework>=3.14
+
 
 # PostgreSQL接続
 psycopg2-binary>=2.9
