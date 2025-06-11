@@ -1,23 +1,13 @@
 // /src/contracts/ContractList.tsx
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import type { Contract } from '../types/contract';
-import { fetchContracts } from '../api/contracts';
 
-const ContractList: React.FC = () => {
-  const [contracts, setContracts] = useState<Contract[]>([]);
+type Props = {
+  contracts: Contract[];
+  onEdit: (contract: Contract) => void;
+};
 
-  useEffect(() => {
-    const loadContracts = async () => {
-      try {
-        const data = await fetchContracts();
-        setContracts(data);
-      } catch (error) {
-        console.error('契約情報の取得に失敗しました:', error);
-      }
-    };
-    loadContracts();
-  }, []);
-
+const ContractList: React.FC<Props> = ({ contracts, onEdit }) => {
   if (contracts.length === 0) {
     return <p className="p-4 text-gray-600">契約データがありません。</p>;
   }
@@ -26,18 +16,15 @@ const ContractList: React.FC = () => {
     <div className="p-8">
       {contracts.map((contract) => (
         <div key={contract.id} className="border border-gray-300 rounded bg-white shadow-md mb-8">
-          {/* 社員名・編集ボタン */}
           <div className="flex justify-between items-center border-b px-6 py-3 bg-gray-100">
             <h2 className="text-xl font-bold">{contract.employee_name}</h2>
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded"
-              onClick={() => alert('編集画面へ遷移（未実装）')}
+              onClick={() => onEdit(contract)}
             >
               編集
             </button>
           </div>
-
-          {/* テーブル形式で契約詳細 */}
           <table className="w-full text-sm table-fixed border-collapse">
             <tbody>
               <tr><td className="w-40 px-6 py-2 font-medium">働き方</td><td>{contract.work_style}</td></tr>
