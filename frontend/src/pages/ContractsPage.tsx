@@ -17,8 +17,8 @@ const ContractsPage: React.FC = () => {
     try {
       const data = await fetchContracts();
       setContracts(data);
-    } catch (error) {
-      console.error('契約一覧の取得に失敗しました:', error);
+    } catch {
+      console.error('契約一覧の取得に失敗しました');
     }
   };
 
@@ -44,7 +44,10 @@ const ContractsPage: React.FC = () => {
 
   return (
     <div className={styles.pageContainer}>
-      {/* main を左、aside を右へ移動 */}
+      <aside className={styles.sidebar}>
+        <ContractList contracts={contracts} onEdit={handleEdit} />
+      </aside>
+
       <main className={styles.main}>
         {selectedContract ? (
           isEditing ? (
@@ -60,10 +63,6 @@ const ContractsPage: React.FC = () => {
           <p className={styles.placeholder}>社員を選択してください。</p>
         )}
       </main>
-
-      <aside className={styles.sidebar}>
-        <ContractList contracts={contracts} onEdit={handleEdit} />
-      </aside>
     </div>
   );
 };
