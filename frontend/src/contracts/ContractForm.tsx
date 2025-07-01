@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import type { Contract, ContractManager } from '../types/contract';
 import { updateContract } from '../api/contracts';
+import styles from '../styles/ContractForm.module.css';
+import '../styles/modal.css'; // グローバルCSSとして読み込み
 
 type Props = {
   contract: Contract;
@@ -20,20 +22,18 @@ const ContractForm: React.FC<Props> = ({ contract, onClose, onUpdated }) => {
     }));
   };
 
-  const handleManagerChange = <
-    K extends keyof ContractManager
-    >(
+  const handleManagerChange = <K extends keyof ContractManager>(
     index: number,
     key: K,
     value: ContractManager[K]
-    ) => {
+  ) => {
     const updated = [...managers];
     updated[index] = {
-        ...updated[index],
-        [key]: value,
+      ...updated[index],
+      [key]: value,
     };
     setManagers(updated);
-    };
+  };
 
   const addManager = () => {
     setManagers([...managers, { name: '', email: '' }]);
@@ -67,13 +67,13 @@ const ContractForm: React.FC<Props> = ({ contract, onClose, onUpdated }) => {
   ];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
-        <h2 className="text-xl font-semibold mb-4">契約編集フォーム</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="modalOverlay">
+      <div className="modalContent">
+        <h2 className={styles.title}>契約情報の編集</h2>
+        <form onSubmit={handleSubmit}>
           {fields.map(({ key, label, type }) => (
-            <div key={key}>
-              <label className="block mb-1 font-medium">{label}</label>
+            <div key={key} className={styles.formGroup}>
+              <label>{label}</label>
               <input
                 type={type || 'text'}
                 value={formData[key] as string | number | undefined}
@@ -81,17 +81,15 @@ const ContractForm: React.FC<Props> = ({ contract, onClose, onUpdated }) => {
                   const value = type === 'number' ? Number(e.target.value) : e.target.value;
                   handleChange(key, value as never);
                 }}
-                className="w-full border px-2 py-1"
               />
             </div>
           ))}
 
-          <div>
-            <label className="block mb-1 font-medium">働き方</label>
+          <div className={styles.formGroup}>
+            <label>働き方</label>
             <select
               value={formData.work_style}
               onChange={(e) => handleChange('work_style', e.target.value as Contract['work_style'])}
-              className="w-full border px-2 py-1"
             >
               <option value="remote">リモート</option>
               <option value="onsite">常駐</option>
@@ -99,54 +97,37 @@ const ContractForm: React.FC<Props> = ({ contract, onClose, onUpdated }) => {
             </select>
           </div>
 
-          <div>
-            <label className="block mb-1 font-medium">担当者</label>
+          <div className={styles.formGroup}>
+            <label>担当者</label>
             {managers.map((m, i) => (
-              <div key={i} className="border p-2 mb-2 rounded space-y-2">
+              <div key={i} className={styles.managerBox}>
                 <input
                   type="text"
                   value={m.name}
                   onChange={(e) => handleManagerChange(i, 'name', e.target.value)}
-                  className="w-full border px-2 py-1"
                   placeholder="氏名"
                 />
                 <input
                   type="email"
                   value={m.email}
                   onChange={(e) => handleManagerChange(i, 'email', e.target.value)}
-                  className="w-full border px-2 py-1"
                   placeholder="メールアドレス"
                 />
-                <button
-                  type="button"
-                  onClick={() => removeManager(i)}
-                  className="text-sm text-red-600"
-                >
+                <button type="button" onClick={() => removeManager(i)} className={styles.removeBtn}>
                   削除
                 </button>
               </div>
             ))}
-            <button
-              type="button"
-              onClick={addManager}
-              className="bg-blue-500 text-white px-2 py-1 rounded text-sm mt-2"
-            >
+            <button type="button" onClick={addManager} className={styles.addBtn}>
               担当者を追加
             </button>
           </div>
 
-          <div className="flex gap-4 justify-end mt-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="bg-gray-500 text-white px-4 py-2 rounded"
-            >
+          <div className="buttonGroup">
+            <button type="button" onClick={onClose} className="buttonCancel">
               キャンセル
             </button>
-            <button
-              type="submit"
-              className="bg-green-600 text-white px-4 py-2 rounded"
-            >
+            <button type="submit" className="buttonSave">
               保存
             </button>
           </div>

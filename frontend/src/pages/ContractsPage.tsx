@@ -1,10 +1,11 @@
 // /src/pages/ContractsPage.tsx
 import React, { useEffect, useState } from 'react';
-import ContractForm from '../contracts/ContractForm';
-import ContractDetail from '../contracts/ContractDetail';
 import ContractList from '../contracts/ContractList';
-import type { Contract } from '../types/contract';
+import ContractDetail from '../contracts/ContractDetail';
+import ContractForm from '../contracts/ContractForm';
 import { fetchContracts } from '../api/contracts';
+import type { Contract } from '../types/contract';
+import styles from '../styles/ContractsPage.module.css';
 import '../styles/modal.css';
 
 const ContractsPage: React.FC = () => {
@@ -42,33 +43,27 @@ const ContractsPage: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen">
-      {/* 左サイドバー（一覧） */}
-      <aside style={{ width: '50%', borderRight: '1px solid #ccc', overflowY: 'auto' }}>
-        <ContractList contracts={contracts} onEdit={handleEdit} />
-      </aside>
-
-      {/* 右詳細表示 */}
-      <main style={{ flex: 1, padding: '24px', overflowY: 'auto' }}>
+    <div className={styles.pageContainer}>
+      {/* main を左、aside を右へ移動 */}
+      <main className={styles.main}>
         {selectedContract ? (
-          <ContractDetail contract={selectedContract} />
-        ) : (
-          <p style={{ color: '#888' }}>社員を選択してください。</p>
-        )}
-      </main>
-
-      {/* モーダル編集フォーム */}
-      {isEditing && selectedContract && (
-        <div className="modal-overlay" onClick={handleFormClose}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          isEditing ? (
             <ContractForm
               contract={selectedContract}
               onClose={handleFormClose}
               onUpdated={handleUpdated}
             />
-          </div>
-        </div>
-      )}
+          ) : (
+            <ContractDetail contract={selectedContract} />
+          )
+        ) : (
+          <p className={styles.placeholder}>社員を選択してください。</p>
+        )}
+      </main>
+
+      <aside className={styles.sidebar}>
+        <ContractList contracts={contracts} onEdit={handleEdit} />
+      </aside>
     </div>
   );
 };

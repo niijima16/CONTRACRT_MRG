@@ -1,42 +1,37 @@
-/* /src/contracts/ContractList.module.css */
-
-.contractListContainer {
-  padding: 2rem;
+/* ContractList.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
 }
 
-.contractCard {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-  overflow-wrap: break-word;
-  word-break: break-word;
+.card {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 1rem;
 }
 
-.contractHeader {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
 }
 
 .employeeName {
-  font-size: 1.2rem;
   font-weight: bold;
+  font-size: 1.1rem;
+  color: #111;
 }
 
 .editButton {
   background-color: #3b82f6;
   color: white;
+  padding: 0.4rem 0.8rem;
   border: none;
-  padding: 6px 12px;
-  font-size: 0.875rem;
-  border-radius: 4px;
+  border-radius: 0.3rem;
   cursor: pointer;
 }
 
@@ -44,22 +39,20 @@
   background-color: #2563eb;
 }
 
-.contractTable {
+.table {
   width: 100%;
-  table-layout: fixed;
   border-collapse: collapse;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
 }
 
-.contractTable td {
-  padding: 4px 8px;
-  vertical-align: top;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  border-top: 1px solid #eee;
+.label {
+  font-weight: bold;
+  color: #444;
+  white-space: nowrap;
+  width: 30%;
 }
 
-.noData {
+.empty {
   padding: 1rem;
-  color: #555;
+  color: #666;
 }
