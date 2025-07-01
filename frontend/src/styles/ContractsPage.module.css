@@ -1,47 +1,26 @@
-/* src/styles/ContractsPage.module.css */
 .pageContainer {
   display: flex;
-  height: 100vh;        /* 画面いっぱいに */
+  height: 100%;
   overflow: hidden;
 }
 
 .sidebar {
-  /* 全体幅の30%を基準に、最小200px、最大400px に */
-  flex: 0 0 30%;
-  min-width: 200px;
-  max-width: 400px;
-  overflow-y: auto;
-  background: #f7f7f7;
+  width: 240px;
+  background-color: #4A4A4A;
+  color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .main {
-  /* 残り70%を使う */
   flex: 1;
-  padding: 1rem;
+  background-color: #F9F9F9;
+  padding: 24px;
   overflow-y: auto;
 }
 
-/* （任意）タブレット以下ではサイドバーを上部に、メインを下部に */
-@media (max-width: 768px) {
-  .pageContainer {
-    flex-direction: column;
-  }
-  .sidebar {
-    flex: none;
-    width: 100%;
-    max-width: none;
-    min-width: none;
-    height: 200px;    /* お好みで高さを固定してもOK */
-  }
-  .main {
-    flex: 1;
-    width: 100%;
-    height: calc(100vh - 200px);
-  }
-}
-
-/* placeholder もモジュールから */
 .placeholder {
   color: #666;
+  font-size: 1.2rem;
   padding: 1rem;
 }

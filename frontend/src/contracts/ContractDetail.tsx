@@ -1,62 +1,81 @@
 // /src/contracts/ContractDetail.tsx
 import React from 'react';
 import type { Contract } from '../types/contract';
-import detailStyles from '../styles/ContractDetail.module.css';
-import '../styles/modal.module.css';
+import styles from '../styles/ContractDetail.module.css';
 
 type Props = {
   contract: Contract;
+  onEdit: () => void;
 };
 
-const ContractDetail: React.FC<Props> = ({ contract }) => (
-  <div className={detailStyles.detailContainer}>
-    <h2 className={detailStyles.title}>{contract.employee_name}</h2>
-    <table className={detailStyles.detailTable}>
+const ContractDetail: React.FC<Props> = ({ contract, onEdit }) => (
+  <div className={styles.detailContainer}>
+    {/* 編集モードに切り替えるボタン */}
+    <button className={styles.editButton} onClick={onEdit}>
+      編集
+    </button>
+
+    <h2 className={styles.title}>
+      {contract.employee_name} の契約情報
+    </h2>
+
+    <table className={styles.table}>
       <tbody>
         <tr>
-          <td className={detailStyles.labelCell}>働き方</td>
-          <td>{contract.work_style}</td>
-        </tr>
-        {/* 以下同様に */}
-        <tr>
-          <td className={detailStyles.labelCell}>契約期間</td>
-          <td>{contract.contract_start_date} ～ {contract.contract_end_date}</td>
+          <td className={styles.tdLabel}>働き方</td>
+          <td className={styles.tdValue}>{contract.work_style}</td>
         </tr>
         <tr>
-          <td className={detailStyles.labelCell}>案件名</td>
-          <td>{contract.project_name}</td>
+          <td className={styles.tdLabel}>契約期間</td>
+          <td className={styles.tdValue}>
+            {contract.contract_start_date} ～ {contract.contract_end_date}
+          </td>
         </tr>
         <tr>
-          <td className={detailStyles.labelCell}>契約先会社</td>
-          <td>{contract.client_company}</td>
+          <td className={styles.tdLabel}>案件名</td>
+          <td className={styles.tdValue}>{contract.project_name}</td>
         </tr>
         <tr>
-          <td className={detailStyles.labelCell}>契約先住所</td>
-          <td>{contract.client_address ?? '未入力'}</td>
+          <td className={styles.tdLabel}>契約先会社</td>
+          <td className={styles.tdValue}>{contract.client_company}</td>
         </tr>
         <tr>
-          <td className={detailStyles.labelCell}>単価</td>
-          <td>{contract.unit_price} 万円/月</td>
+          <td className={styles.tdLabel}>契約先住所</td>
+          <td className={styles.tdValue}>
+            {contract.client_address ?? '未入力'}
+          </td>
         </tr>
         <tr>
-          <td className={detailStyles.labelCell}>超過単価</td>
-          <td>{contract.overtime_unit_price} 円/時</td>
+          <td className={styles.tdLabel}>単価</td>
+          <td className={styles.tdValue}>{contract.unit_price} 万円/月</td>
         </tr>
         <tr>
-          <td className={detailStyles.labelCell}>控除単価</td>
-          <td>{contract.deduction_unit_price} 円/時</td>
+          <td className={styles.tdLabel}>超過単価</td>
+          <td className={styles.tdValue}>{contract.overtime_unit_price} 円/時</td>
         </tr>
         <tr>
-          <td className={detailStyles.labelCell}>生産時間</td>
-          <td>{contract.working_hours_min} ～ {contract.working_hours_max} 時間/月</td>
+          <td className={styles.tdLabel}>控除単価</td>
+          <td className={styles.tdValue}>{contract.deduction_unit_price} 円/時</td>
         </tr>
         <tr>
-          <td className={detailStyles.labelCell}>担当者</td>
-          <td>
+          <td className={styles.tdLabel}>生産時間</td>
+          <td className={styles.tdValue}>
+            {contract.working_hours_min} ～ {contract.working_hours_max} 時間/月
+          </td>
+        </tr>
+        <tr>
+          <td className={styles.tdLabel}>担当者</td>
+          <td className={styles.tdValue}>
             {contract.managers.map((m, i) => (
-              <div key={i}>{m.name}（{m.email}）</div>
+              <div key={i}>
+                {m.name}（{m.email}）
+              </div>
             ))}
           </td>
+        </tr>
+        <tr>
+          <td className={styles.tdLabel}>支払いサイト</td>
+          <td className={styles.tdValue}>{contract.payment_site_days} 日後</td>
         </tr>
       </tbody>
     </table>

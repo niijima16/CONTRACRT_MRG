@@ -1,44 +1,45 @@
 /* src/styles/ContractSidebar.module.css */
 
-.container {
+.header {
   padding: 1rem;
-  background: #f7f7f7;
-  height: 100%;
-  overflow-y: auto;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
 .list {
   list-style: none;
   margin: 0;
   padding: 0;
+  flex: 1;
+  overflow-y: auto;
 }
 
-/* .item と .activeItem の共通部分をまとめて定義 */
-.item,
-.activeItem {
-  display: block;
+.item {
   width: 100%;
   text-align: left;
-  padding: 0.5rem 1rem;
-  border: none;
+  padding: 0.75rem 1rem;
   background: none;
+  border: none;
+  color: #eee;
   cursor: pointer;
-  color: #333;
+  font-size: 1rem;
 }
 
-/* マウスオーバー時の背景 */
-.item:hover,
-.activeItem:hover {
-  background: #e2e8f0;
+.item:hover {
+  background-color: rgba(255,255,255,0.1);
 }
 
-/* 選択中アイテムだけ背景と太字を追加 */
 .activeItem {
-  background: #e2e8f0;
+  background-color: rgba(255,255,255,0.2);
   font-weight: bold;
-}
-
-.empty {
-  padding: 1rem;
-  color: #666;
+  /* .item のスタイルをコピペしてください */
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: #eee;
+  cursor: pointer;
+  font-size: 1rem;
 }
