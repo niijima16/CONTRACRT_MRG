@@ -1,0 +1,65 @@
+/* /src/contracts/ContractList.module.css */
+
+.contractListContainer {
+  padding: 2rem;
+}
+
+.contractCard {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.contractHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.employeeName {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.editButton {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.editButton:hover {
+  background-color: #2563eb;
+}
+
+.contractTable {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.contractTable td {
+  padding: 4px 8px;
+  vertical-align: top;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  border-top: 1px solid #eee;
+}
+
+.noData {
+  padding: 1rem;
+  color: #555;
+}
