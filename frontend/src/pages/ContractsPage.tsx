@@ -1,66 +1,67 @@
-// /src/pages/ContractsPage.tsx
+// src/pages/ContractsPage.tsx
 import React, { useEffect, useState } from 'react';
-import ContractList from '../contracts/ContractList';
+import ContractSidebar from '../contracts/ContractSidebar';
 import ContractDetail from '../contracts/ContractDetail';
 import ContractForm from '../contracts/ContractForm';
 import { fetchContracts } from '../api/contracts';
 import type { Contract } from '../types/contract';
-import styles from '../styles/ContractsPage.module.css';
-import '../styles/modal.css';
+import pageStyles from '../styles/ContractsPage.module.css';
+import '../styles/modal.module.css'; // グローバル読み込み
 
 const ContractsPage: React.FC = () => {
   const [contracts, setContracts] = useState<Contract[]>([]);
-  const [selectedContract, setSelectedContract] = useState<Contract | null>(null);
+  const [selected, setSelected] = useState<Contract | null>(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  const loadContracts = async () => {
-    try {
-      const data = await fetchContracts();
-      setContracts(data);
-    } catch {
-      console.error('契約一覧の取得に失敗しました');
-    }
-  };
-
   useEffect(() => {
-    loadContracts();
+    fetchContracts().then(setContracts);
   }, []);
 
-  const handleEdit = (contract: Contract) => {
-    setSelectedContract(contract);
-    setIsEditing(true);
-  };
-
-  const handleFormClose = () => {
+  const handleSelect = (c: Contract) => {
+    setSelected(c);
     setIsEditing(false);
-    setSelectedContract(null);
   };
-
+  const handleEdit = () => setIsEditing(true);
+  const handleClose = () => setIsEditing(false);
   const handleUpdated = () => {
-    loadContracts();
-    setIsEditing(false);
-    setSelectedContract(null);
+    fetchContracts().then(data => {
+      setContracts(data);
+      setIsEditing(false);
+      setSelected(data.find(x => x.id === selected?.id) || null);
+    });
   };
 
   return (
-    <div className={styles.pageContainer}>
-      <aside className={styles.sidebar}>
-        <ContractList contracts={contracts} onEdit={handleEdit} />
+    <div className={pageStyles.pageContainer}>
+      <aside className={pageStyles.sidebar}>
+        <ContractSidebar
+          contracts={contracts}
+          selectedId={selected?.id || null}
+          onSelect={handleSelect}
+        />
       </aside>
 
-      <main className={styles.main}>
-        {selectedContract ? (
+      <main className={pageStyles.main}>
+        {selected ? (
           isEditing ? (
             <ContractForm
-              contract={selectedContract}
-              onClose={handleFormClose}
+              contract={selected}
+              onClose={handleClose}
               onUpdated={handleUpdated}
             />
           ) : (
-            <ContractDetail contract={selectedContract} />
+            <>
+              <button
+                className={pageStyles.editButton}
+                onClick={handleEdit}
+              >
+                編集
+              </button>
+              <ContractDetail contract={selected} />
+            </>
           )
         ) : (
-          <p className={styles.placeholder}>社員を選択してください。</p>
+          <p className={pageStyles.placeholder}>社員を選択してください。</p>
         )}
       </main>
     </div>

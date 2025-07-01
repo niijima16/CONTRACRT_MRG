@@ -1,0 +1,44 @@
+/* src/styles/ContractSidebar.module.css */
+
+.container {
+  padding: 1rem;
+  background: #f7f7f7;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* .item と .activeItem の共通部分をまとめて定義 */
+.item,
+.activeItem {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* マウスオーバー時の背景 */
+.item:hover,
+.activeItem:hover {
+  background: #e2e8f0;
+}
+
+/* 選択中アイテムだけ背景と太字を追加 */
+.activeItem {
+  background: #e2e8f0;
+  font-weight: bold;
+}
+
+.empty {
+  padding: 1rem;
+  color: #666;
+}
