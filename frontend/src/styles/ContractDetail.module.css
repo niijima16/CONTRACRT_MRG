@@ -1,22 +1,20 @@
-/* src/styles/ContractDetail.module.css
-   契約詳細表示（テーブル）および「編集」ボタンのスタイル定義  [oai_citation:1‡ContractDetail.module.css](file-service://file-8EYaXe8JfRCFUvjK6t26rj) */
+/* src/styles/ContractDetail.module.css */
 
-/* ── 詳細コンテナ：背景・余白・シャドウ */
+/* ── 詳細コンテナ */
 .detailContainer {
-  position: relative;          /* .editButton を絶対配置するため */
-  background: #fff;
-  border-radius: 8px;
-  padding: 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: relative;
+  padding: 2rem;
+  padding-top: 3rem; /* ボタン分の余白 */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
   max-width: 800px;
   margin: auto;
+  color: #000;
 }
 
-/* ── 右上「編集」ボタン */
+/* ── 編集ボタン */
 .editButton {
-  position: absolute;
-  top: 16px;
-  right: 16px;
   background-color: #3b82f6;
   color: #fff;
   border: none;
@@ -29,20 +27,37 @@
   background-color: #2563eb;
 }
 
-/* ── タイトル見出し */
+/* ── 削除ボタン */
+.deleteButton {
+  background-color: #ef4444;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+/* ── 2つのボタンを右上に並べる */
+.buttonRow {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ── タイトル */
 .title {
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
-/* ── 詳細テーブル */
+/* ── テーブル */
 .table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
 }
-
-/* ── ラベル列 */
 .tdLabel {
   width: 120px;
   padding: 0.5rem;
@@ -50,8 +65,6 @@
   color: #555;
   vertical-align: top;
 }
-
-/* ── 値列 */
 .tdValue {
   padding: 0.5rem;
   color: #333;

@@ -1,43 +1,38 @@
 // src/contracts/ContractDetail.tsx
-
 import React from 'react';
 import type { Contract } from '../types/contract';
 import styles from '../styles/ContractDetail.module.css';
 
-/**
- * 契約詳細表示コンポーネント
- *
- * @param contract 表示対象の契約情報オブジェクト
- * @param onEdit   編集モードへ切り替えるためのコールバック
- */
 type Props = {
+  /** 表示する契約データ */
   contract: Contract;
+  /** 「編集」ボタン押下時のハンドラ */
   onEdit: () => void;
+  /** 「削除」ボタン押下時のハンドラ */
+  onDelete: () => void;
 };
 
-const ContractDetail: React.FC<Props> = ({ contract, onEdit }) => (
+/**
+ * 契約の詳細表示コンポーネント
+ */
+const ContractDetail: React.FC<Props> = ({ contract, onEdit, onDelete }) => (
   <div className={styles.detailContainer}>
-    {/*
-      編集ボタン：クリックで編集モードに切り替え
-    */}
-    <button
-      className={styles.editButton}
-      onClick={onEdit}
-    >
-      編集
-    </button>
+    {/* 編集・削除ボタン */}
+    <div className={styles.buttonRow}>
+      <button className={styles.editButton} onClick={onEdit}>
+        編集
+      </button>
+      <button className={styles.deleteButton} onClick={onDelete}>
+        削除
+      </button>
+    </div>
 
-    {/*
-      タイトル：社員名 + 契約情報
-    */}
+    {/* 社員名見出し */}
     <h2 className={styles.title}>
       {contract.employee_name} の契約情報
     </h2>
 
-    {/*
-      契約情報テーブル
-      左列にラベル、右列に値を表示
-    */}
+    {/* 契約内容テーブル */}
     <table className={styles.table}>
       <tbody>
         <tr>
@@ -85,13 +80,11 @@ const ContractDetail: React.FC<Props> = ({ contract, onEdit }) => (
         <tr>
           <td className={styles.tdLabel}>担当者</td>
           <td className={styles.tdValue}>
-            {contract.managers.length > 0
-              ? contract.managers.map((m, i) => (
-                  <div key={i}>
-                    {m.name}（{m.email}）
-                  </div>
-                ))
-              : '未登録'}
+            {contract.managers.map((m, i) => (
+              <div key={i}>
+                {m.name}（{m.email}）
+              </div>
+            ))}
           </td>
         </tr>
         <tr>

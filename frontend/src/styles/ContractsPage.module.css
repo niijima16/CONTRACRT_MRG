@@ -1,33 +1,29 @@
-/* src/styles/ContractsPage.module.css
-   ページ全体のレイアウト定義（サイドバー＋メイン）  [oai_citation:4‡ContractsPage.module.css](file-service://file-QFw5eZxc8SMPyoAnU8a7PC) */
+/* ContractsPage.module.css */
 
-/* ── ページコンテナ：横並びレイアウト */
 .pageContainer {
   display: flex;
-  height: 100%;
-  overflow: hidden;
+  width: 100%;
+  height: calc(100% - 56px);  /* TopBar の高さを引く */
+  margin-top: 56px;
 }
 
-/* ── サイドバー領域 */
+/* 左サイドバー部分 */
 .sidebar {
-  width: 240px;
-  background-color: #4A4A4A;
-  color: white;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ── メインコンテンツ領域 */
-.main {
-  flex: 1;
-  background-color: #F9F9F9;
-  padding: 24px;
+  width: 240px;        /* 固定幅 */
+  background-color: #374151;
+  color: #f9fafb;
   overflow-y: auto;
 }
 
-/* ── 何も選択されていないときのプレースホルダー */
+/* 右コンテンツ部分 */
+.main {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f3f4f6;
+  padding: 16px;
+}
+
+/* プレースホルダー */
 .placeholder {
-  color: #666;
-  font-size: 1.2rem;
-  padding: 1rem;
+  color: #6b7280;
 }

@@ -1,0 +1,15 @@
+/* AppLayout.module.css */
+
+/* 全体を縦に並べて、高さ 100vh をマネジメント */
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* TopBar の下、残り領域が「サイド＋メイン」の横並び */
+.contentContainer {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
