@@ -1,23 +1,22 @@
 // src/contracts/ContractForm.tsx
 import React, { useState } from 'react';
 import type { Contract, ContractManager } from '../types/contract';
-import { updateContract } from '../api/contracts';
+import { updateContract, createContract } from '../api/contracts';  // ← createContractを追加
 import formStyles from '../styles/ContractForm.module.css';
-import modalStyles from '../styles/modal.module.css';
+import '../styles/modal.module.css';
 
 type Props = {
   contract: Contract;
   onClose: () => void;
   onUpdated: () => void;
+  isNew?: boolean;
 };
 
-type FieldDef = {
-  key: keyof Omit<Contract, 'managers'>; // managers は別扱い
+const fields: {
+  key: keyof Omit<Contract, 'managers' | 'id' | 'created_at' | 'updated_at'>;
   label: string;
   type: 'text' | 'date' | 'number';
-};
-
-const fields: FieldDef[] = [
+}[] = [
   { key: 'employee_name',       label: '社員名',        type: 'text'   },
   { key: 'project_name',        label: '案件名',        type: 'text'   },
   { key: 'client_company',      label: '契約先会社名',  type: 'text'   },
@@ -32,42 +31,52 @@ const fields: FieldDef[] = [
   { key: 'payment_site_days',   label: '支払いサイト（日）', type: 'number' },
 ];
 
-const ContractForm: React.FC<Props> = ({ contract, onClose, onUpdated }) => {
+const ContractForm: React.FC<Props> = ({
+  contract,
+  onClose,
+  onUpdated,
+  isNew = false,  // ← デフォルト false
+}) => {
   const [formData, setFormData] = useState<Contract>({ ...contract });
   const [managers, setManagers] = useState<ContractManager[]>([...contract.managers]);
 
-  // 汎用フィールド更新
+  // 共通フィールド更新
   const handleChange = <K extends keyof Contract>(key: K, value: Contract[K]) => {
     setFormData(prev => ({ ...prev, [key]: value }));
   };
 
-  // マネージャー更新
+  // 担当者更新
   const handleManagerChange = <K extends keyof ContractManager>(
     idx: number, key: K, value: ContractManager[K]
   ) => {
-    const copy = [...managers];
-    copy[idx] = { ...copy[idx], [key]: value };
-    setManagers(copy);
+    setManagers(ms =>
+      ms.map((m, i) => i === idx ? { ...m, [key]: value } : m)
+    );
   };
 
-  const addManager = () => setManagers([...managers, { name: '', email: '' }]);
-  const removeManager = (idx: number) => {
-    const copy = [...managers];
-    copy.splice(idx, 1);
-    setManagers(copy);
-  };
+  const addManager    = () => setManagers(ms => [...ms, { name: '', email: '' }]);
+  const removeManager = (idx: number) =>
+    setManagers(ms => ms.filter((_, i) => i !== idx));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await updateContract(formData.id!, { ...formData, managers });
+    if (isNew) {
+      // 新規作成
+      await createContract({ ...formData, managers });
+    } else {
+      // 更新
+      await updateContract(formData.id!, { ...formData, managers });
+    }
     onUpdated();
   };
 
   return (
-    <div className={modalStyles.modalOverlay}>
-      <div className={modalStyles.modalContent}>
+    <div className="modalOverlay">
+      <div className="modalContent">
         <form className={formStyles.formContainer} onSubmit={handleSubmit}>
-          <h2 className={formStyles.title}>契約情報の編集</h2>
+          <h2 className={formStyles.title}>
+            {isNew ? '新規契約作成' : '契約情報の編集'}
+          </h2>
 
           {fields.map(({ key, label, type }) => {
             const value = formData[key] ?? '';
@@ -77,11 +86,13 @@ const ContractForm: React.FC<Props> = ({ contract, onClose, onUpdated }) => {
                 <input
                   className={formStyles.input}
                   type={type}
-                  value={value as string | number}
+                  value={String(value)}
                   onChange={e => {
                     const raw = e.target.value;
-                    const parsed = (type === 'number' ? Number(raw) : raw) as unknown;
-                    handleChange(key, parsed as Contract[typeof key]);
+                    const parsed = (type === 'number'
+                      ? Number(raw)
+                      : raw) as Contract[typeof key];
+                    handleChange(key, parsed);
                   }}
                 />
               </div>
@@ -94,7 +105,12 @@ const ContractForm: React.FC<Props> = ({ contract, onClose, onUpdated }) => {
             <select
               className={formStyles.select}
               value={formData.work_style}
-              onChange={e => handleChange('work_style', e.target.value as Contract['work_style'])}
+              onChange={e =>
+                handleChange(
+                  'work_style',
+                  e.target.value as Contract['work_style']
+                )
+              }
             >
               <option value="remote">リモート</option>
               <option value="onsite">常駐</option>
@@ -119,16 +135,25 @@ const ContractForm: React.FC<Props> = ({ contract, onClose, onUpdated }) => {
                   value={m.email}
                   onChange={e => handleManagerChange(i, 'email', e.target.value)}
                 />
-                <button type="button" onClick={() => removeManager(i)}>
+                <button
+                  type="button"
+                  className={formStyles.removeButton}
+                  onClick={() => removeManager(i)}
+                >
                   削除
                 </button>
               </div>
             ))}
-            <button type="button" onClick={addManager}>
+            <button
+              type="button"
+              className={formStyles.addButton}
+              onClick={addManager}
+            >
               担当者を追加
             </button>
           </div>
 
+          {/* アクションボタン */}
           <div className={formStyles.buttonRow}>
             <button
               type="button"

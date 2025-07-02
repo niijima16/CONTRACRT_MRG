@@ -16,7 +16,10 @@ export const fetchContracts = async (): Promise<Contract[]> => {
 /**
  * 契約情報を新規作成
  */
-export const createContract = async (data: Contract): Promise<Contract> => {
+
+export type ContractInput = Omit<Contract, 'id' | 'created_at' | 'updated_at'>;
+
+export const createContract = async (data: ContractInput): Promise<Contract> => {
   const response = await axios.post<Contract>(BASE_URL, data);
   return response.data;
 };
@@ -35,3 +38,4 @@ export const updateContract = async (id: number, data: Contract): Promise<Contra
 export const deleteContract = async (id: number): Promise<void> => {
   await axios.delete(`${BASE_URL}${id}/`);
 };
+
