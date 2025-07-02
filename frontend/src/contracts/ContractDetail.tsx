@@ -1,8 +1,15 @@
-// /src/contracts/ContractDetail.tsx
+// src/contracts/ContractDetail.tsx
+
 import React from 'react';
 import type { Contract } from '../types/contract';
 import styles from '../styles/ContractDetail.module.css';
 
+/**
+ * 契約詳細表示コンポーネント
+ *
+ * @param contract 表示対象の契約情報オブジェクト
+ * @param onEdit   編集モードへ切り替えるためのコールバック
+ */
 type Props = {
   contract: Contract;
   onEdit: () => void;
@@ -10,15 +17,27 @@ type Props = {
 
 const ContractDetail: React.FC<Props> = ({ contract, onEdit }) => (
   <div className={styles.detailContainer}>
-    {/* 編集モードに切り替えるボタン */}
-    <button className={styles.editButton} onClick={onEdit}>
+    {/*
+      編集ボタン：クリックで編集モードに切り替え
+    */}
+    <button
+      className={styles.editButton}
+      onClick={onEdit}
+    >
       編集
     </button>
 
+    {/*
+      タイトル：社員名 + 契約情報
+    */}
     <h2 className={styles.title}>
       {contract.employee_name} の契約情報
     </h2>
 
+    {/*
+      契約情報テーブル
+      左列にラベル、右列に値を表示
+    */}
     <table className={styles.table}>
       <tbody>
         <tr>
@@ -66,11 +85,13 @@ const ContractDetail: React.FC<Props> = ({ contract, onEdit }) => (
         <tr>
           <td className={styles.tdLabel}>担当者</td>
           <td className={styles.tdValue}>
-            {contract.managers.map((m, i) => (
-              <div key={i}>
-                {m.name}（{m.email}）
-              </div>
-            ))}
+            {contract.managers.length > 0
+              ? contract.managers.map((m, i) => (
+                  <div key={i}>
+                    {m.name}（{m.email}）
+                  </div>
+                ))
+              : '未登録'}
           </td>
         </tr>
         <tr>

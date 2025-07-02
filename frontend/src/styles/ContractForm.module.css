@@ -1,5 +1,7 @@
-/* src/styles/ContractForm.module.css */
+/* src/styles/ContractForm.module.css
+   モーダル内編集／新規フォーム用スタイル定義  [oai_citation:2‡ContractForm.module.css](file-service://file-MtVcfxrmk8cYcd2fdr3SDE) */
 
+/* ── フォーム全体コンテナ */
 .formContainer {
   background-color: #ffffff;
   padding: 2rem;
@@ -9,6 +11,7 @@
   color: #333;
 }
 
+/* ── フォームタイトル */
 .title {
   font-size: 1.5rem;
   font-weight: bold;
@@ -16,10 +19,12 @@
   color: #333;
 }
 
+/* ── 入力グループの余白 */
 .formGroup {
   margin-bottom: 1rem;
 }
 
+/* ── ラベル */
 .label {
   display: block;
   font-weight: bold;
@@ -27,6 +32,7 @@
   color: #333;
 }
 
+/* ── テキスト／選択フィールド */
 .input,
 .select {
   width: 100%;
@@ -37,12 +43,14 @@
   background-color: #fff;
 }
 
+/* ── 担当者グループ（氏名・メール・削除ボタン） */
 .managerGroup {
   display: flex;
   gap: 1rem;
   margin-bottom: 0.5rem;
 }
 
+/* ── アクションボタン行 */
 .buttonRow {
   display: flex;
   justify-content: flex-end;
@@ -50,6 +58,7 @@
   margin-top: 1.5rem;
 }
 
+/* ── キャンセルボタン */
 .cancelButton {
   background-color: #ef4444;
   color: #fff;
@@ -59,6 +68,7 @@
   cursor: pointer;
 }
 
+/* ── 保存ボタン */
 .saveButton {
   background-color: #10b981;
   color: #fff;

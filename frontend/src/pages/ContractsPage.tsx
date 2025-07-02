@@ -6,33 +6,54 @@ import type { Contract } from '../types/contract';
 import { fetchContracts } from '../api/contracts';
 import pageStyles    from '../styles/ContractsPage.module.css';
 import sidebarStyles from '../styles/ContractSidebar.module.css';
-import '../styles/modal.module.css';
 
 const ContractsPage: React.FC = () => {
+  // ── State定義 ───────────────────────────────────────────
+  /** 契約一覧データ */
   const [contracts, setContracts]       = useState<Contract[]>([]);
+  /** 現在選択中の契約（詳細表示対象） */
   const [selectedContract, setSelected] = useState<Contract | null>(null);
+  /** 編集モードかどうか */
   const [isEditing, setIsEditing]       = useState(false);
+  /** 新規作成モードかどうか */
   const [isCreating, setIsCreating]     = useState(false);
 
-  // 契約一覧を取得
+  // ── データ取得 ─────────────────────────────────────────
+  /**
+   * 契約一覧をサーバーから取得してstateにセットする
+   */
   const reload = () => {
-    fetchContracts().then(setContracts).catch(console.error);
+    fetchContracts()
+      .then(setContracts)
+      .catch((err) => {
+        console.error('契約一覧の取得に失敗しました:', err);
+      });
   };
+  // 初回レンダー時に一度だけreloadを呼び出す
   useEffect(reload, []);
 
-  // 新規作成に入る
+  // ── ハンドラ ───────────────────────────────────────────
+  /**
+   * 「新規作成」ボタン押下時の処理
+   * - 既存の選択をクリアし、新規作成フォームを表示する
+   */
   const handleCreate = () => {
     setSelected(null);
     setIsEditing(false);
     setIsCreating(true);
   };
 
+  // ── レンダリング ───────────────────────────────────────
   return (
     <div className={pageStyles.pageContainer}>
-      {/* ── 左サイドバー */}
+      {/* ── 左サイドバー ─────────────────────────────── */}
       <aside className={pageStyles.sidebar}>
+        {/* 見出し */}
         <div className={sidebarStyles.header}>
           <span>契約情報</span>
+        </div>
+        {/* 新規作成ボタン */}
+        <div className={sidebarStyles.header}>
           <button
             className={sidebarStyles.createButton}
             onClick={handleCreate}
@@ -40,9 +61,9 @@ const ContractsPage: React.FC = () => {
             新規作成
           </button>
         </div>
-
+        {/* 契約リスト */}
         <ul className={sidebarStyles.list}>
-          {contracts.map(c => (
+          {contracts.map((c) => (
             <li key={c.id}>
               <button
                 className={
@@ -51,6 +72,7 @@ const ContractsPage: React.FC = () => {
                     : sidebarStyles.item
                 }
                 onClick={() => {
+                  // 選択した契約を詳細表示モードに切り替え
                   setSelected(c);
                   setIsEditing(false);
                   setIsCreating(false);
@@ -63,37 +85,40 @@ const ContractsPage: React.FC = () => {
         </ul>
       </aside>
 
-      {/* ── 右メイン */}
+      {/* ── 右メイン ─────────────────────────────────────── */}
       <main className={pageStyles.main}>
+        {/* 何も選択・作成中でない場合のプレースホルダー */}
         {!selectedContract && !isCreating && (
-          <p className={pageStyles.placeholder}>社員を選択してください。</p>
+          <p className={pageStyles.placeholder}>
+            社員を選択してください。
+          </p>
         )}
 
-        {/* 詳細表示 */}
+        {/* 詳細表示モード */}
         {selectedContract && !isEditing && !isCreating && (
           <ContractDetail
             contract={selectedContract}
-            onEdit={() => setIsEditing(true)}
+            onEdit={() => setIsEditing(true)}  // 編集モードに切り替え
           />
         )}
 
-        {/* 編集フォーム */}
+        {/* 編集フォームモード */}
         {selectedContract && isEditing && (
           <ContractForm
             contract={selectedContract}
-            onClose={() => setIsEditing(false)}
+            onClose={() => setIsEditing(false)}  // キャンセル時に編集モード解除
             onUpdated={() => {
-              reload();
+              reload();     // 更新後に再読み込み
               setIsEditing(false);
             }}
           />
         )}
 
-        {/* 新規作成フォーム */}
+        {/* 新規作成フォームモード */}
         {isCreating && (
           <ContractForm
             contract={{
-              // 空の初期オブジェクト
+              // 空の初期オブジェクトを渡す
               id: undefined,
               employee_name: '',
               work_style: 'remote',
@@ -112,12 +137,12 @@ const ContractsPage: React.FC = () => {
               created_at: '',
               updated_at: '',
             }}
-            onClose={() => setIsCreating(false)}
+            onClose={() => setIsCreating(false)}   // キャンセル時に作成モード解除
             onUpdated={() => {
-              reload();
+              reload();       // 作成後に再読み込み
               setIsCreating(false);
             }}
-            isNew={true}
+            isNew={true}    // 新規フラグを渡す
           />
         )}
       </main>

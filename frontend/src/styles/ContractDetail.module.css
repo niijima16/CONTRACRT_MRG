@@ -1,7 +1,9 @@
-/* src/styles/ContractDetail.module.css */
+/* src/styles/ContractDetail.module.css
+   契約詳細表示（テーブル）および「編集」ボタンのスタイル定義  [oai_citation:1‡ContractDetail.module.css](file-service://file-8EYaXe8JfRCFUvjK6t26rj) */
 
+/* ── 詳細コンテナ：背景・余白・シャドウ */
 .detailContainer {
-  position: relative;          /* ボタンを絶対配置するため */
+  position: relative;          /* .editButton を絶対配置するため */
   background: #fff;
   border-radius: 8px;
   padding: 24px;
@@ -10,6 +12,7 @@
   margin: auto;
 }
 
+/* ── 右上「編集」ボタン */
 .editButton {
   position: absolute;
   top: 16px;
@@ -22,22 +25,24 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
-
 .editButton:hover {
   background-color: #2563eb;
 }
 
+/* ── タイトル見出し */
 .title {
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
+/* ── 詳細テーブル */
 .table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
 }
 
+/* ── ラベル列 */
 .tdLabel {
   width: 120px;
   padding: 0.5rem;
@@ -46,6 +51,7 @@
   vertical-align: top;
 }
 
+/* ── 値列 */
 .tdValue {
   padding: 0.5rem;
   color: #333;

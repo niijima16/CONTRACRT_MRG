@@ -1,9 +1,14 @@
+/* src/styles/ContractsPage.module.css
+   ページ全体のレイアウト定義（サイドバー＋メイン）  [oai_citation:4‡ContractsPage.module.css](file-service://file-QFw5eZxc8SMPyoAnU8a7PC) */
+
+/* ── ページコンテナ：横並びレイアウト */
 .pageContainer {
   display: flex;
   height: 100%;
   overflow: hidden;
 }
 
+/* ── サイドバー領域 */
 .sidebar {
   width: 240px;
   background-color: #4A4A4A;
@@ -12,6 +17,7 @@
   flex-direction: column;
 }
 
+/* ── メインコンテンツ領域 */
 .main {
   flex: 1;
   background-color: #F9F9F9;
@@ -19,6 +25,7 @@
   overflow-y: auto;
 }
 
+/* ── 何も選択されていないときのプレースホルダー */
 .placeholder {
   color: #666;
   font-size: 1.2rem;

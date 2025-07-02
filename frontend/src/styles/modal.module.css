@@ -1,5 +1,7 @@
-/* modal.module.css */
+/* src/styles/modal.module.css
+   モーダル共通レイヤー＆ダイアログ用スタイル  [oai_citation:5‡modal.module.css](file-service://file-P98Za2NeoaNduZcN8fDdxD) */
 
+/* ── 全画面オーバーレイ */
 .modalOverlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -7,6 +9,7 @@
   z-index: 999;
 }
 
+/* ── モーダル本体の配置と見た目 */
 .modalContent {
   position: fixed;
   top: 50%; left: 50%;

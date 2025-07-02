@@ -1,5 +1,7 @@
-/* src/styles/ContractList.module.css */
+/* src/styles/ContractList.module.css
+   契約一覧のカード表示および「編集」ボタンのスタイル定義  [oai_citation:0‡ContractList.module.css](file-service://file-4pPKL4gmfaNfuNpijzzq7h) */
 
+/* ── 全体コンテナ：サイドバー内でスクロール可能なリスト領域 */
 .container {
   padding: 1rem;
   background-color: #ffffff;
@@ -7,6 +9,7 @@
   height: 100%;
 }
 
+/* ── 各契約カード：背景・枠・シャドウ */
 .card {
   background-color: #ffffff;
   border: 1px solid #ccc;
@@ -15,6 +18,7 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* ── カードヘッダー：社員名＋編集ボタン配置 */
 .header {
   display: flex;
   justify-content: space-between;
@@ -24,12 +28,14 @@
   border-bottom: 1px solid #ddd;
 }
 
+/* ── 社員名見出し */
 .name {
   font-size: 1.1rem;
   font-weight: bold;
   color: #333;
 }
 
+/* ── 編集ボタン */
 .editButton {
   background-color: #3b82f6;
   color: #fff;
@@ -43,18 +49,19 @@
   background-color: #2563eb;
 }
 
+/* ── 詳細テーブル */
 .table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
 }
-
 .table td {
   padding: 0.5rem 1rem;
   border-bottom: 1px solid #eee;
   vertical-align: top;
 }
 
+/* ── 左ラベルセル */
 .labelCell {
   width: 8rem;
   font-weight: 500;
@@ -62,6 +69,7 @@
   white-space: nowrap;
 }
 
+/* ── データなしメッセージ */
 .empty {
   padding: 1rem;
   color: #666;

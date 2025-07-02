@@ -16,7 +16,7 @@ body,
   height: 100%;
 }
 
-/* 3) ベースフォントだけ定義（必要ならここで） */
+/* 3) ベースフォント定義*/
 body {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
