@@ -1,5 +1,6 @@
 from django.db import models
-from contracts.models import Contract
+from apps.contracts.models import Contract
+from django.utils import timezone
 
 class Invoice(models.Model):
     """
@@ -24,22 +25,53 @@ class Invoice(models.Model):
     # 送信日。デフォルトは現在日時
     sent_date = models.DateField(
         verbose_name='送信日',
-        auto_now_add=True
+        default=timezone.now
     )
     # 支払期日。必須、デフォルトは現在日時
     payment_due_date = models.DateField(
         verbose_name='支払期日',
-        default=models.DateField.auto_now_add
+        default=timezone.now
     )
-    
     
     # 外部キー引用ブロック
     contract = models.ForeignKey(
         Contract,
         on_delete=models.CASCADE,
         related_name='invoices',
-        verbose_name='契約'
+        verbose_name='契約',
+        null=True,
+        blank=True,
     )
+    
+    class Meta:
+        verbose_name = '請求基本情報'
+        verbose_name_plural = '請求基本情報'
 
     def __str__(self):
-        return self.invoice_number
+        return f"{self.contract.client_company}"
+    
+class InvoiceItem(models.Model):
+    """
+    請求明細行を表すモデル。
+    各請求書に関連する品目、数量、単価などの詳細を管理します。
+    """
+    basic = models.ForeignKey(
+        Invoice,
+        on_delete=models.CASCADE,
+        related_name='items',
+        verbose_name='請求基本情報',
+    )
+    description = models.CharField('品目', max_length=255)
+    quantity = models.PositiveIntegerField('数量', default=1)
+    unit_price = models.DecimalField('単価', max_digits=10, decimal_places=2)
+    
+    @property
+    def amount(self):
+        return self.quantity * self.unit_price
+
+    class Meta:
+        verbose_name = '請求明細行'
+        verbose_name_plural = '請求明細行'
+
+    def __str__(self):
+        return f"{self.description} x{self.quantity}"
