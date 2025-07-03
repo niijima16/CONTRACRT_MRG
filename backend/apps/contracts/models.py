@@ -144,7 +144,6 @@ class ContractManager(models.Model):
         """
         return f"{self.name} <{self.email}>"
 
-
 class ContractHistory(models.Model):
     """
     契約更新履歴を記録するモデル。

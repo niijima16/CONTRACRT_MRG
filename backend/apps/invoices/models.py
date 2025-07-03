@@ -49,6 +49,7 @@ class Invoice(models.Model):
 
     def __str__(self):
         return f"{self.contract.client_company}"
+   
     
 class InvoiceItem(models.Model):
     """
