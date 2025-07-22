@@ -1,0 +1,44 @@
+テーブル名,カラム名,データ型,NULL許可,デフォルト,制約・備考
+contract,id,SERIAL,NO,,主キー、自動採番
+contract,employee_name,VARCHAR(255),NO,'',''
+contract,work_style,VARCHAR(20),NO,'onsite','remote, onsite, hybrid のいずれか'
+contract,contract_start_date,DATE,NO,CURRENT_DATE,''
+contract,contract_end_date,DATE,NO,CURRENT_DATE,''
+contract,project_name,VARCHAR(255),NO,'',''
+contract,client_company,VARCHAR(255),NO,'',''
+contract,client_address,VARCHAR(512),YES,'','空文字列可'
+contract,unit_price,INTEGER,NO,0,''
+contract,overtime_unit_price,INTEGER,NO,0,''
+contract,deduction_unit_price,INTEGER,NO,0,''
+contract,working_hours_min,INTEGER,NO,0,''
+contract,working_hours_max,INTEGER,NO,0,''
+contract,payment_site_days,INTEGER,NO,0,''
+contract,created_at,TIMESTAMP WITH TIME ZONE,NO,NOW(),'自動設定'
+contract,updated_at,TIMESTAMP WITH TIME ZONE,NO,NOW(),'自動更新'
+
+contract_manager,id,SERIAL,NO,,主キー、自動採番
+contract_manager,contract_id,INTEGER,NO,,外部キー→contract(id) ON DELETE CASCADE
+contract_manager,name,VARCHAR(255),NO,'',''
+contract_manager,email,VARCHAR(254),NO,'',''
+
+contract_history,id,SERIAL,NO,,主キー、自動採番
+contract_history,contract_id,INTEGER,NO,,外部キー→contract(id) ON DELETE CASCADE
+contract_history,snapshot,JSONB,NO,,更新前スナップショット
+contract_history,created_at,TIMESTAMP WITH TIME ZONE,NO,NOW(),'自動設定'
+
+invoice,id,SERIAL,NO,,主キー、自動採番
+invoice,invoice_number,VARCHAR(50),NO,'',''
+invoice,registration_number,VARCHAR(50),NO,'',''
+invoice,bank_name,VARCHAR(100),NO,'',''
+invoice,branch_name,VARCHAR(100),NO,'',''
+invoice,account_number,VARCHAR(20),NO,'',''
+invoice,account_holder,VARCHAR(100),NO,'',''
+invoice,sent_date,DATE,NO,CURRENT_DATE,''
+invoice,payment_due_date,DATE,NO,CURRENT_DATE,''
+invoice,contract_id,INTEGER,YES,,外部キー→contract(id) ON DELETE CASCADE
+
+invoice_item,id,SERIAL,NO,,主キー、自動採番
+invoice_item,basic_id,INTEGER,NO,,外部キー→invoice(id) ON DELETE CASCADE
+invoice_item,description,VARCHAR(255),NO,'',''
+invoice_item,quantity,INTEGER,NO,1,''
+invoice_item,unit_price,NUMERIC(10,2),NO,, 

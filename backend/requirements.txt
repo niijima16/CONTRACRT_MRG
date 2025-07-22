@@ -3,6 +3,9 @@ Django>=4.2,<5.0
 django-cors-headers
 djangorestframework>=3.14
 
+# JWT認証
+djangorestframework-simplejwt>=5.2
+
 
 # PostgreSQL接続
 psycopg2-binary>=2.9

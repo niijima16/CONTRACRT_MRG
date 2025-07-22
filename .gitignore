@@ -8,6 +8,7 @@ __pycache__/
 *.swp
 *.DS_Store
 .Python
+.venv
 env/
 venv/
 *.env

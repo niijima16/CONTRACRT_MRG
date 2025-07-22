@@ -1,7 +1,7 @@
 // src/pages/ContractsPage.tsx
 import React, { useEffect, useState } from 'react';
-import ContractDetail from '../contracts/ContractDetail';
-import ContractForm   from '../contracts/ContractForm';
+import ContractDetail from '../app_contracts/ContractDetail';
+import ContractForm   from '../app_contracts/ContractForm';
 import type { Contract } from '../types/contract';
 import { fetchContracts, deleteContract } from '../api/contracts';
 import pageStyles    from '../styles/ContractsPage.module.css';

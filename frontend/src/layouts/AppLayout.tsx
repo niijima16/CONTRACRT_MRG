@@ -4,16 +4,16 @@ import TopBar from '../components/TopBar';
 import styles from '../styles/AppLayout.module.css';
 
 interface AppLayoutProps {
-  /** レイアウトの中身（ページごとのコンテンツ） */
+  /** ページ固有の中身 */
   children: React.ReactNode;
 }
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => (
   <div className={styles.appContainer}>
-    {/* ── ヘッダー */}
+    {/* ── 共通ヘッダー */}
     <TopBar />
 
-    {/* ── メインの入れ子 */}
+    {/* ── ページ固有コンテンツ */}
     <div className={styles.contentContainer}>
       {children}
     </div>
